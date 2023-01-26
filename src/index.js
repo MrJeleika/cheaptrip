@@ -1,17 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import "./index.css";
+import "typeface-roboto";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { Box, LinearProgress } from "@material-ui/core";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        {/* <Suspense fallback={<div>loading...</div>}> */}
+        <Suspense
+          fallback={
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
+          }
+        >
+          <App />
+        </Suspense>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
